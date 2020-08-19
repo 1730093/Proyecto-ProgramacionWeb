@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Registro</title>
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="login-page"> 
+        <form action="registrarUsuario.php" method="POST"> 
+        <div class="form">
+            <h1>Registro</h1>
+
+            <input type="text" name="nombre" placeholder="Nombre" required />
+            <input type="text" name="apellido" placeholder="Apellido" required/>
+            <input id="inSexo" type="radio" name="sexo" value="Masculino" onclick="marcado=true">Masculino
+            <input id="inSexo" type="radio" name="sexo" value="Femenino" onclick="marcado=true">Femenino
+            <input id="inFecha" type="date" name="fnacimiento" placeholder="Fecha de nacimiento" required/>
+            <input type="text" name="correo" placeholder="Correo" required/>
+            <input type="text" name="usuario" placeholder="Nombre de usuario" required/>
+            <input type="password" name="contra" placeholder="Contraseña" required/>
+            <input id="btnEnviar" type="submit" name="submit" value="Registrar">
+            <p class="message">Ya estas registrado? <a href="../login.html">Iniciar Sesión</a></p>
+        </div>
+        </form>
+      </div>
+
+    <script src="../js/alertas.js"></script>
+    </body>
+    </html>
+    
