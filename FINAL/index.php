@@ -49,8 +49,9 @@ include 'session.php';
          <?php include 'html_parts/session_control.php'; ?>
 		   <nav id="nav-wrap">
 		      <ul id="nav" class="nav">
-               <li><a class="smoothscroll" href="notificaciones/index.php">Notificaciones</a></li>	
+               <li><a class="smoothscroll" href="notificaciones/index.php">Envio de Notificaciones</a></li>	
                <li><a class="smoothscroll" href="pacientes/index.php">Registro Pacientes</a></li>	
+               <li><a class="smoothscroll" href="internos/index.php">Registro usuarios internos</a></li>	
                <li><a class="smoothscroll" href="login.html">Cerrar Sesión</a></li>	
                		         
 		      </ul> <!-- end #nav -->

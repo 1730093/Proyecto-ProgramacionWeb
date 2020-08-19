@@ -3,10 +3,13 @@
 include '../session.php';
 
 $db = getPdo();
-
-$sqlCmd = 'SELECT id, todo, done FROM todos';
+$sqlCmd = 'SELECT id, asunto, contenido, fyhenvio, usuariointerno, idDestino FROM notificaciones';
 $stmt = $db->prepare($sqlCmd);
 $stmt->execute();
+
+$sqlCmdd = 'SELECT nombre + "" + apellidos as nombre FROM pacientes';
+$stmtt = $db->prepare($sqlCmdd);
+$stmtt->execute();
 
 ?>
 
@@ -58,7 +61,8 @@ $stmt->execute();
 		   <nav id="nav-wrap">
 		      <ul id="nav" class="nav">
                <li><a class="smoothscroll" href="../notificaciones/index.php">Notificaciones</a></li>	
-               <li><a class="smoothscroll" href="../login.html">Cerrar Sesión</a></li>	
+               <li><a class="smoothscroll" href="../pacientes/index.php">Registro Pacientes</a></li>	
+               <li><a class="smoothscroll" href="../login.html">Cerrar Sesión</a></li>		
                		         
 		      </ul> <!-- end #nav -->
 		   </nav> <!-- end #nav-wrap --> 	        
@@ -72,31 +76,42 @@ $stmt->execute();
    <script src="../js/init.js"></script>
 
 <div id="contenedor">
-    <h3>ToDo App</h3>
-
-    <form action="add_todo.php" method="POST">
-        <label for="txtTodo">TODO:</label>
-        <input id="txtTodo" name="todo" type="text" required="required" />
+    <form action="enviar_notificacion.php" method="POST">
+        <label for="txtasunto">Asunto:</label>
+        <input id="txtasunto" name="asunto" type="text" required="required" />
+        <label for="txtmensaje">Mensaje:</label>
+        <input id="txtmensaje" size="50" name="mensaje" type="text" required="required" />
+        <label for="destino">Usuario:</label>
+        <select name="destino">
+        <?php 
+        while ($D = $stmtt->fetch(PDO::FETCH_ASSOC))
+        {
+            <option value = $D['nombre']>Usuario</option>
+        }
+        ?>        
+        </select>
         <br />
-        <input type="submit" value="Agregar" />
+        
+        <input type="submit" value="Enviar" />
     </form>
-
+    <h2>Notificaciones enviadas</h2>   
+            
     <table style="border-colapse: colapse;">
         <thead>
             <tr>
-                <th>Todo</th><th>Done?</th><th>Mark</th><th>Delete</th>
+                <th>Asunto</th><th>Mensaje</th><th>Fecha y Hora</th><th>Usuario Interno</th><th>Usuario Externo</th><th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
 <?php while($r = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
             <tr>
-                <td style="border: 1px solid black; width: 300px;"><?= $r['todo'] ?></td>
-                <td style="border: 1px solid black; text-align: center;"><?= $r['done'] != '0' ? 'YES' : 'NO' ?></td>
+                <td style="border: 1px solid black; width: 300px;"><?= $r['asunto'] ?></td>
+                <td style="border: 1px solid black; text-align: center;"><?= $r['contenido'] ?></td>
+                <td style="border: 1px solid black; text-align: center;"><?= $r['fyhenvio'] ?></td>  
+                <td style="border: 1px solid black; text-align: center;"><?= $r['usuariointerno'] ?></td>  
+                <td style="border: 1px solid black; text-align: center;"><?= $r['usuarioexterno'] ?></td>  
                 <td style="border: 1px solid black;">
-                    <a href="done_todo.php?id=<?=$r['id']?>&done=<?=$r['done'] == '0' ? '1' : '0'?>">MARK</a>
-                </td>
-                <td style="border: 1px solid black;">
-                    <a href="delete_todo.php?id=<?=$r['id']?>">DELETE</a>
+                    <a href="eliminar_notificaciones.php?id=<?=$r['id']?>">Eliminar</a>
                 </td>
             </tr>
 <?php } ?>
